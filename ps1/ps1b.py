@@ -10,8 +10,6 @@ current_savings = 0  #the amount that you have saved so far,starting from 0
 portion_down_payment = 0.25 * total_cost
 current_savings = 0  #the amount that you have saved so far,starting from 0
 r = 0.04 #annual rate
-monthly_salary = annual_salary / 12
-portion_saved = portion_saved * monthly_salary 
 annual_return = (current_savings * r) / 12
 time = 0
 
@@ -19,7 +17,7 @@ time = 0
 while (current_savings < portion_down_payment):
     monthly_salary = annual_salary / 12
     current_savings += (current_savings * r / 12) + (portion_saved * monthly_salary)  
-    time+=1
+    time += 1
 
     if time % 6 == 0:
         annual_salary = annual_salary + (annual_salary * semi_annual_raise)
