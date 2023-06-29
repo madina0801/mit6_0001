@@ -6,7 +6,6 @@ total_cost = float(input('Enter the cost of your dream home: '))    #total cost 
 semi_annual_raise = float(input('Enter the semi annual raise, as a decimal: ')) # annual salary raise
 
 #Variables. All amounts in (#)
-current_savings = 0  #the amount that you have saved so far,starting from 0
 portion_down_payment = 0.25 * total_cost
 current_savings = 0  #the amount that you have saved so far,starting from 0
 r = 0.04 #annual rate
