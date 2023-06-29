@@ -1,44 +1,59 @@
 # User Inputs
 annual_salary = float(input('Enter your annual salary: '))  # Your salary for the whole year
 # this is the percentage of what you wishes to save monthly
-portion_saved = float(input('Enter the percent of your salary to save, as a decimal: '))
 total_cost = 1000000  # total cost of the dream home
 semi_annual_raise = 0.04  # annual salary raise
 
 # Variables. All amounts in (#)
 portion_down_payment = 0.25 * total_cost
-current_savings = 0  # the amount that you have saved so far,starting from 0
 r = 0.04  # annual rate
-annual_return = (current_savings * r) / 12
-time = 0
+epsilon = 100
 steps = 0
 
 # Limits
 max_portion = 10000
 min_portion = 0
 best_portion = max_portion
+pay_in_three_years = True
 
 # Iterations and Output
 while True:
     steps+=1
     best_portion_saved = best_portion / 10000
+    monthly_savings = (annual_salary / 12) * best_portion_saved
 
+    current_savings = 0.0
+    months = 0
+    
+    while months <= 36:
+        current_savings += monthly_savings + ((current_savings * r) / 12)
+        months+=1
+        
+        if months % 6 == 0:
+            annual_salary += annual_salary * semi_annual_raise
+            monthly_savings = (annual_salary / 12) * best_portion_saved            
+    
+    if abs(current_savings - portion_down_payment) <= epsilon:
+        break
+    
+    if current_savings > portion_down_payment:
+        max_portion = best_portion_saved
+    else:
+        min_portion = best_portion_saved
+        
+    if min_portion >= max_portion:
+        pay_in_three_years = False
+        break
+        
+    best_portion_saved = (max_portion + min_portion) // 2 # we will guess the value of this
+    
 
-# while (time <= 36):
-#     time += 1
+if pay_in_three_years:
+    print('Best savings rate: {}'.format(best_portion_saved))
+    print('Steps in bisection search: {}'.format(steps))
+else:
+    print('It is not possible to pay the down payment in three years.')
 
-
-# while (current_savings < portion_down_payment):
-#     monthly_salary = annual_salary / 12
-#     current_savings += (current_savings * r / 12) + \
-#         (portion_saved * monthly_salary)
-#     time += 1
-
-#     if time % 6 == 0:
-#         annual_salary = annual_salary + (annual_salary * semi_annual_raise)
-
-# print('Number of months: %d' % time)
-# print(annual_salary)
 # Part C: Finding the right amount to save away
 # In Part B, you had a chance to explore how both the percentage of your salary that you save each month
 # and your annual raise affect how long it takes you to save for a down payment.  This is nice, but
