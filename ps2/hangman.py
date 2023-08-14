@@ -81,7 +81,15 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    string_to_print = ''
+    
+    for char in secret_word:
+        if char in letters_guessed:
+            string_to_print += char
+        else:
+            string_to_print += '_'
+            
+    return string_to_print
 
 
 def get_available_letters(letters_guessed):
