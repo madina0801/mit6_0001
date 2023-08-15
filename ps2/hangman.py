@@ -133,7 +133,36 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    num_guesses = 6
+    letters_guessed = []
+    print("Secret word contains of " + str(len(secret_word)) + " letters!")
+
+    while True:
+        print("You have " + str(num_guesses) + " left")
+        letter_guess = input("Please guess a letter: ")
+        guessed_word = get_guessed_word(secret_word, letters_guessed)
+
+        if letter_guess.isaplha():
+            if letter_guess not in letters_guessed:
+                letters_guessed.append(letter_guess)
+                guessed_word = get_guessed_word(secret_word, letters_guessed)
+            
+            if letter_guess in secret_word:
+                print("Correct guess! " + guessed_word)
+            
+            else:
+                print("Wrong guess! :()")
+                num_guesses -= 1
+        
+        else:
+            if num_guesses > 0:
+                num_guesses -= 1
+                print("No more guesses left! :( Try again!" )
+                
+                
+
+
+
 
 
 # When you've completed your hangman function, scroll down to the bottom
