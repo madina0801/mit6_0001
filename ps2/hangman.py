@@ -82,13 +82,13 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     string_to_print = ''
-    
+
     for char in secret_word:
         if char in letters_guessed:
             string_to_print += char
         else:
             string_to_print += '_'
-            
+
     return string_to_print
 
 
@@ -99,7 +99,12 @@ def get_available_letters(letters_guessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    str_available_letters = ''
+    for letter in string.ascii_lowercase:
+        if letter not in letters_guessed:
+            str_available_letters += letter
+
+    return str_available_letters
 
 
 def hangman(secret_word):
