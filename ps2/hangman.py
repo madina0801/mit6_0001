@@ -138,11 +138,11 @@ def hangman(secret_word):
     print("Secret word contains of " + str(len(secret_word)) + " letters!")
 
     while True:
-        print("You have " + str(num_guesses) + " left")
+        print("You have " + str(num_guesses) + " guesses left")
         letter_guess = input("Please guess a letter: ")
         guessed_word = get_guessed_word(secret_word, letters_guessed)
 
-        if letter_guess.isaplha():
+        if letter_guess.isalpha():
             if letter_guess not in letters_guessed:
                 letters_guessed.append(letter_guess)
                 guessed_word = get_guessed_word(secret_word, letters_guessed)
@@ -151,25 +151,36 @@ def hangman(secret_word):
                 print("Correct guess! " + guessed_word)
             
             else:
-                print("Wrong guess! :()")
+                print("Wrong guess! :(")
                 num_guesses -= 1
         
         else:
             if num_guesses > 0:
                 num_guesses -= 1
                 print("No more guesses left! :( Try again!" )
-                
-                
 
+        print('...........')
 
+        if is_word_guessed(secret_word, letters_guessed):
+            unreapeted_letters = []
+            for letter in secret_word:
+                if letter not in unreapeted_letters:
+                    unreapeted_letters.append(letter)
+            
+            print("Congrats! You win!")
+            print("Your total score is " + str(num_guesses * len(secret_word)))
 
-
+            break
+        
+        else:
+            if num_guesses <= 0:
+                print("Sorry! No more guesse left! The secret word was " + secret_word)
+                break
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
 # (hint: you might want to pick your own
 # secret_word while you're doing your own testing)
-
 
 # -----------------------------------
 
@@ -251,5 +262,5 @@ if __name__ == "__main__":
     # To test part 3 re-comment out the above lines and
     # uncomment the following two lines.
 
-    # secret_word = choose_word(wordlist)
-    # hangman_with_hints(secret_word)
+    secret_word = choose_word(wordlist)
+    hangman_with_hints(secret_word)
