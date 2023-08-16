@@ -195,8 +195,20 @@ def match_with_gaps(my_word, other_word):
         False otherwise: 
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    my_word_without_spaces = ''
+    letters_guessed = []
 
+    for letter in my_word:
+        if letter != ' ':
+            my_word_without_spaces += letter
+        
+        if letter.isalpha():
+            letters_guessed.append(letter)
+
+    if len(my_word_without_spaces.strip()) != len(other_word.strip()):
+        return False
+    
+    
 
 def show_possible_matches(my_word):
     '''
