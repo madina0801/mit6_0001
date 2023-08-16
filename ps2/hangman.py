@@ -208,7 +208,22 @@ def match_with_gaps(my_word, other_word):
     if len(my_word_without_spaces.strip()) != len(other_word.strip()):
         return False
     
+    for i in range(len(my_word_without_spaces)):
+        cur_char = my_word_without_spaces[i]
+
+        cur_char_other = other_word[i]
+
+        if cur_char.isalpha():
+            char_is_same = cur_char == cur_char_other
+
+            if not char_is_same:
+                return False
+            
+        else:
+            if cur_char == '_' and cur_char_other in letters_guessed:
+              return False
     
+    return True
 
 def show_possible_matches(my_word):
     '''
