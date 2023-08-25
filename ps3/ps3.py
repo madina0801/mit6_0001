@@ -195,7 +195,6 @@ def update_hand(hand, word):
 # Problem #3: Test word validity
 #
 
-
 def is_valid_word(word, hand, word_list):
     """
     Returns True if word is in the word_list and is entirely
@@ -221,11 +220,31 @@ def is_valid_word(word, hand, word_list):
             word_list.append(new_word.lower())
 
         return word_list
+
+    if '*' in word:
+        words_that_replace_wildcard = words_replace_wildcard_for_vowels(word)
+        none_words_in_dictionary = True
+        
+        for w in words_that_replace_wildcard:
+            if w.lower() in word_list:
+                none_words_in_dictionary = False
+                
+        if none_words_in_dictionary:
+            return False
+        
+    elif word.lower() not in word_list:
+        return False
     
-    words_replace_wildcard = words_replace_wildcard_for_vowels(word)
-    words_in_dictionary = False
+    hand_copy = hand.copy()
+    for w in word.lower():
+        if w not in hand_copy.keys():
+            return False
+        else:
+            hand_copy[w] -= 1
+            if hand_copy[w] < 0:
+                return False
 
-
+    return True
 #
 # Problem #5: Playing a hand
 #
