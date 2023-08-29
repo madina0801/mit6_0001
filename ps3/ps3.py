@@ -292,7 +292,6 @@ def play_hand(hand, word_list):
 
     # Keep track of the total score
     total_score = 0
-    hand_copy = hand.copy()
     # As long as there are still letters left in the hand:
     while calculate_handlen(hand) > 0:
     # Display the hand
@@ -303,9 +302,10 @@ def play_hand(hand, word_list):
         if user_word == "!!":
     # End the game (break out of the loop)
             print("Game over!")
-            break
+            quit()
+            # break
     # Otherwise (the input is not two exclamation points):
-        if user_word != "!!":
+        else:
     # If the word is valid:
             if is_valid_word(user_word, hand, word_list):
     # Tell the user how many points the word earned,
@@ -323,8 +323,8 @@ def play_hand(hand, word_list):
                 hand = update_hand(hand, user_word)
     # Game is over (user entered '!!' or ran out of letters),
     # so tell user the total score
-    if calculate_handlen(hand) == 0:
-        print("Run out of letters!")
+    if calculate_handlen(hand) <= 0:
+        print("Ran out of letters!")
         print("Your total score", total_score)
     
     # Return the total score as result of function
@@ -413,8 +413,6 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
-
-    # TO DO... Remove this line when you implement this function
     num_of_hands = int(input("Type a total number of hands: "))
     total_score = 0
     for n in range(num_of_hands):
