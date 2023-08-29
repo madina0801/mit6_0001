@@ -290,7 +290,6 @@ def play_hand(hand, word_list):
 
     """
 
-    # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
     total_score = 0
     hand_copy = hand.copy()
@@ -324,10 +323,7 @@ def play_hand(hand, word_list):
                 hand = update_hand(hand, user_word)
     # Game is over (user entered '!!' or ran out of letters),
     # so tell user the total score
-    if user_word == "!!":
-        print("Game over!")
-        print("You total score", total_score)
-    elif calculate_handlen(hand) == 0:
+    if calculate_handlen(hand) == 0:
         print("Run out of letters!")
         print("Your total score", total_score)
     
@@ -366,8 +362,26 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
 
-    pass  # TO DO... Remove this line when you implement this function
+    hand_copy = hand.copy()
+    if letter not in hand_copy.keys():
+        return hand_copy
 
+    chosen_letter = hand_copy[letter]
+    del(hand_copy[letter])
+
+    if letter in CONSONANTS:
+        new_list = CONSONANTS
+    else:
+        new_list = VOWELS
+
+    while True:
+        replacing_letter = random.choice(new_list)
+
+        if replacing_letter not in hand.keys():
+            hand_copy[replacing_letter] = chosen_letter
+            break
+    
+    return hand_copy
 
 def play_game(word_list):
     """
@@ -401,7 +415,27 @@ def play_game(word_list):
     """
 
     # TO DO... Remove this line when you implement this function
-    print("play_game not implemented.")
+    num_of_hands = int(input("Type a total number of hands: "))
+    total_score = 0
+    for n in range(num_of_hands):
+        if n > 0:
+            replay_hand_answer = input("Would you like to replay a hand? yes/no ")
+
+            if replay_hand_answer == 'no':
+                hand = deal_hand(HAND_SIZE)
+            
+            print("Current head ", end='')
+            display_hand(hand)
+
+            substitute_letter_answer = input("Would you like to substitute a letter? yes/no ")
+            if substitute_letter_answer == 'yes':
+                replaced_letter = input("What letter would you like to substitute? ")
+                hand = substitute_hand(hand, replaced_letter)
+            
+            total_score += play_hand(hand, word_list)
+    
+    print("Your total score is ", total_score)
+
 
 
 #
