@@ -23,7 +23,22 @@ def get_permutations(sequence):
     a different order than what is listed here.
     '''
 
-    pass #delete this line and replace with your code here
+    if len(sequence) <= 1:
+        return [sequence]
+    
+    else:
+        permutations = []
+        first_char = sequence[0]
+        next_chars = sequence[1:]
+        sub_permutations = get_permutations(next_chars)
+
+        for s in sub_permutations:
+            for index in range(len(s) + 1):
+                new_seq = s[0:index] + first_char + s[index:len(s)+1]
+                permutations.append(new_seq)
+           
+        #print(permutations)
+        return permutations
 
 if __name__ == '__main__':
 #    #EXAMPLE
@@ -36,5 +51,6 @@ if __name__ == '__main__':
 #    to be three characters or fewer as you will have n! permutations for a 
 #    sequence of length n)
 
-    pass #delete this line and replace with your code here
-
+    print(get_permutations('abc'))
+    print(get_permutations('ab'))
+    print(get_permutations('buzz'))
