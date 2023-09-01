@@ -70,7 +70,8 @@ class Message(object):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        self.message_text = text
+        self.get_valid_words = load_words(WORDLIST_FILENAME)
 
     def get_message_text(self):
         '''
@@ -78,7 +79,7 @@ class Message(object):
         
         Returns: self.message_text
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text
 
     def get_valid_words(self):
         '''
@@ -87,7 +88,7 @@ class Message(object):
         
         Returns: a COPY of self.valid_words
         '''
-        pass #delete this line and replace with your code here
+        return self.get_valid_words.copy()
 
     def build_shift_dict(self, shift):
         '''
@@ -103,7 +104,19 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-        pass #delete this line and replace with your code here
+        from string import ascii_lowercase as str_lowercase, ascii_uppercase as str_uppercase, whitespace, punctuation
+
+        dictionary = dict()
+
+        for i in range(len(str_lowercase)):
+            dictionary[str_lowercase[i]] = str_lowercase[(i+shift)%26]
+            dictionary[str_uppercase[i]] = str_uppercase[(i+shift)%26]
+
+        for char in whitespace+punctuation:
+            dictionary[char] = char
+
+        return dictionary
+
 
     def apply_shift(self, shift):
         '''
