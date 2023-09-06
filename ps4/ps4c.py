@@ -5,7 +5,6 @@
 
 import string
 from ps4a import get_permutations
-from string import punctuation, whitespace, digits
 
 ### HELPER CODE ###
 def load_words(file_name):
@@ -110,13 +109,14 @@ class SubMessage(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-        
-        chars = CONSONANTS_LOWER + VOWELS_LOWER + punctuation + whitespace + digits
+        from string import punctuation, whitespace, digits
+
+        chars = CONSONANTS_LOWER + CONSONANTS_UPPER + punctuation + whitespace + digits
 
         dictionary = {char: char for char in chars}
         for i in range(5):
-            dictionary[VOWELS_LOWER[i]] = permutation[i]
-            dictionary[VOWELS_UPPER[i]] = permutation[i].upper()
+            dictionary[VOWELS_LOWER[i]] = vowels_permutation[i]
+            dictionary[VOWELS_UPPER[i]] = vowels_permutation[i].upper()
         
         return dictionary
     
@@ -165,8 +165,34 @@ class EncryptedSubMessage(SubMessage):
         
         Hint: use your function from Part 4A
         '''
-        pass #delete this line and replace with your code here
+        max_valid_words = 0
+        best_mssg = self.message_text
+        
+        from string import punctuation, whitespace, digits
+        chars = CONSONANTS_UPPER + CONSONANTS_LOWER + punctuation + whitespace + digits
+        dictionary = {char: char for char in chars}
+
+        for p in get_permutations(VOWELS_LOWER):
+            valid_words_count = 0
+
+            for i in range(5):
+                dictionary[VOWELS_LOWER[i]] = p[i]
+                dictionary[VOWELS_UPPER[i]] = p[i].upper()
+
+            decrypt_message = ''
+
+            for c in self.message_text:
+                decrypt_message += dictionary[c]
+
+            for w in decrypt_message.split():
+                if is_word(self.valid_words, w):
+                    valid_words_count += 1
+
+            if valid_words_count > max_valid_words:
+                best_mssg = decrypt_message
+                max_valid_words = valid_words_count
     
+        return best_mssg
 
 if __name__ == '__main__':
 
@@ -180,4 +206,4 @@ if __name__ == '__main__':
     enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
     print("Decrypted message:", enc_message.decrypt_message())
      
-    #TODO: WRITE YOUR TEST CASES HERE
+     #TODO: WRITE YOUR TEST CASES HERE

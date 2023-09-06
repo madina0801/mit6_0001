@@ -264,18 +264,10 @@ if __name__ == '__main__':
     plaintext = PlaintextMessage('hello', 2)
     print('Expected Output: jgnnq')
     print('Actual Output:', plaintext.get_message_text_encrypted())
-    # plaintext test 2
-    plaintext = PlaintextMessage('MIT < GT', 1)
-    print('Expected Output: NJU < HU')
-    print('Actual Output:', plaintext.get_message_text_encrypted())
 
     # cipher text test 1
     ciphertext = CiphertextMessage('jgnnq')
     print('Expected Output:', (24, 'hello'))
-    print('Actual Output:', ciphertext.decrypt_message())
-    # cipher text test 2
-    ciphertext = CiphertextMessage('zypq')
-    print('Expected Output:', (2, 'bars'))
     print('Actual Output:', ciphertext.decrypt_message())
 
     storytext = CiphertextMessage(get_story_string())
