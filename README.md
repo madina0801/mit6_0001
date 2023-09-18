@@ -1,4 +1,4 @@
-# MIT 6.00001
+# MIT 6.0001
 Coding assignments from "Introduction To Computer Science And Programming In Python" course from MIT OpenCourseWare.
 
 Link to the course - 
