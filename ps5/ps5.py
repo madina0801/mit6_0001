@@ -115,6 +115,12 @@ class PhraseTrigger(Trigger):
             if text_words[i] == phrase_words[0]:
                 suspicious_words.append(text_words[i:i+len(phrase_words)])
 
+        for word in suspicious_words:
+            if word == phrase_words:
+                return True
+
+            return False
+
             
 # Problem 3
 # TODO: TitleTrigger
