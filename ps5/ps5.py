@@ -104,7 +104,16 @@ class PhraseTrigger(Trigger):
         text_copy = text.lower()
 
         for char in string.punctuation:
-            text_copy.replace(char, ' ')
+            text_copy = text_copy.replace(char, ' ')
+
+        text_words = text_copy.split()
+        phrase_words = self.get_phrase().split()
+
+        suspicious_words = []
+
+        for i in range(len(text_words)):
+            if text_words[i] == phrase_words[0]:
+                suspicious_words.append(text_words[i:i+len(phrase_words)])
 
             
 # Problem 3
