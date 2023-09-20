@@ -119,15 +119,21 @@ class PhraseTrigger(Trigger):
             if word == phrase_words:
                 return True
 
-            return False
+        return False
 
             
 # Problem 3
 # TODO: TitleTrigger
+class TitleTrigger(PhraseTrigger):
+    def evaluate(self, story):
+        return self.is_phrase_in(story.get_title())
 
 # Problem 4
 # TODO: DescriptionTrigger
-
+class DescriptionTrigger(PhraseTrigger):
+    def evaluate(self, story):
+        return self.is_phrase_in(story.get_description())
+                                 
 # TIME TRIGGERS
 
 # Problem 5
