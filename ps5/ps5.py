@@ -100,11 +100,12 @@ class PhraseTrigger(Trigger):
         self.phrase = phrase.lower()
     def get_phrase(self):
         return self.phrase
+    
     def is_phrase_in(self, text):
         text_copy = text.lower()
 
-        for char in string.punctuation:
-            text_copy = text_copy.replace(char, ' ')
+        for i in string.punctuation:
+            text_copy = text_copy.replace(i, ' ')
 
         text_words = text_copy.split()
         phrase_words = self.get_phrase().split()
@@ -141,10 +142,37 @@ class DescriptionTrigger(PhraseTrigger):
 # Constructor:
 #        Input: Time has to be in EST and in the format of "%d %b %Y %H:%M:%S".
 #        Convert time from string to a datetime before saving it as an attribute.
+class TimeTrigger(Trigger):
+    def __init__(self, time):
+        dt = datetime.strptime(time, "%d %b %Y %H:%M:%S")
+        self.time = dt.replace(tzinfo=pytz.timezone("EST"))
+
+    def get_time(self):
+        return self.time
 
 # Problem 6
 # TODO: BeforeTrigger and AfterTrigger
+class BeforeTrigger(TimeTrigger):
+    def evaluate(self, story):
+        pubdate = story.get_pubdate()
+        trigger_time = self.get_time()
 
+        if pubdate.tzname() is None:
+            pubdate = pubdate.replace(tzinfo=None)
+            trigger_time = trigger_time.replace(tzinfo=None)
+
+        return pubdate <= trigger_time
+
+class AfterTrigger(TimeTrigger):
+    def evaluate(self, story):
+        pubdate = story.get_pubdate()
+        trigger_time = self.get_time()
+
+        if pubdate.tzname() is None:
+            pubdate = pubdate.replace(tzinfo=None)
+            trigger_time = trigger_time.replace(tzinfo=None)
+
+        return pubdate >= trigger_time
 
 # COMPOSITE TRIGGERS
 
