@@ -183,7 +183,7 @@ class NotTrigger(Trigger):
         self.T = T
     def get_T(self):
         return self.T
-    def evaluate(self, X):
+    def evaluate(self, x):
         return not self.get_T().evaluate(x)
 
 # Problem 8
