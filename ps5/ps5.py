@@ -178,6 +178,13 @@ class AfterTrigger(TimeTrigger):
 
 # Problem 7
 # TODO: NotTrigger
+class NotTrigger(Trigger):
+    def __init__(self, T):
+        self.T = T
+    def get_T(self):
+        return self.T
+    def evaluate(self, X):
+        return not self.get_T().evaluate(x)
 
 # Problem 8
 # TODO: AndTrigger
