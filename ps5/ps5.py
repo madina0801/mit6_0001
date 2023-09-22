@@ -188,11 +188,29 @@ class NotTrigger(Trigger):
 
 # Problem 8
 # TODO: AndTrigger
+class AndTrigger(Trigger):
+    def __init__(self, T1, T2):
+        self.T1 = T1
+        self.T2 = T2
+    def get_T1(self):
+        return self.T1
+    def get_T2(self):
+        return self.T2
+    def evaluate(self, x):
+        return self.get_T1().evaluate(x) and self.get_T2().evaluate(x)
 
 # Problem 9
 # TODO: OrTrigger
-
-
+class OrTrigger(Trigger):
+    def __init__(self, T1, T2):
+        self.T1 = T1
+        self.T2 = T2
+    def get_T1(self):
+        return self.T1
+    def get_T2(self):
+        return self.T2
+    def evaluate(self, x):
+        return self.get_T1().evaluate(x) or self.get_T2().evaluate(x)
 #======================
 # Filtering
 #======================
