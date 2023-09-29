@@ -253,9 +253,31 @@ def read_trigger_config(filename):
     # line is the list of lines that you need to parse and for which you need
     # to build triggers
 
-    print(lines) # for now, print it so you see what it contains!
-
-
+    d_trigs = {}
+    l_trigs = []
+    for line in lines:
+        l = line.split(',')
+        if l[1] == 'TITLE' and d_trigs.get(l[0]) is None:
+            d_trigs[l[0]] = TitleTrigger(l[2])
+        elif l[1] == 'DESCRIPTION' and d_trigs.get(l[0]) is None:
+            d_trigs[l[0]] = DescriptionTrigger(l[2])
+        elif l[1] == 'BEFORE' and d_trigs.get(l[0]) is None:
+            d_trigs[l[0]] = BeforeTrigger(l[2]) 
+        elif l[1] == 'AFTER' and d_trigs.get(l[0]) is None:
+            d_trigs[l[0]] = AfterTrigger(l[2]) 
+        elif l[1] == 'NOT' and d_trigs.get(l[0]) is None and isinstance(d_trigs.get(l[2]), Trigger):
+            d_trigs[l[0]] = NotTrigger(d_trigs.pop(l[2]))
+        elif l[1] == 'AND' and d_trigs.get(l[0]) is None and isinstance( d_trigs.get(l[2]), Trigger) and isinstance(d_trigs.get(l[3]),Trigger):
+            d_trigs[l[0]] = AndTrigger(d_trigs.pop(l[2]), d_trigs.pop(l[3]))
+        elif l[1] == 'OR' and d_trigs.get(l[0]) is None and isinstance(d_trigs.get(l[2]), Trigger) and isinstance(d_trigs.get(l[3]),Trigger):
+            d_trigs[l[0]] = OrTrigger(d_trigs.pop(l[2]), d_trigs.pop(l[3]))
+        elif l[0] == 'ADD':
+            for t in l[1:]:
+                l_trigs.append(d_trigs.get(t))
+        else:
+            print('Line was not processed:', line)
+    
+    return l_trigs
 
 SLEEPTIME = 120 #seconds -- how often we poll
 
@@ -271,7 +293,7 @@ def main_thread(master):
 
         # Problem 11
         # TODO: After implementing read_trigger_config, uncomment this line 
-        # triggerlist = read_trigger_config('triggers.txt')
+        triggerlist = read_trigger_config('triggers.txt')
         
         # HELPER CODE - you don't need to understand this!
         # Draws the popup window that displays the filtered stories
@@ -328,4 +350,3 @@ if __name__ == '__main__':
     t = threading.Thread(target=main_thread, args=(root,))
     t.start()
     root.mainloop()
-
