@@ -7,7 +7,7 @@ Link to the course -
 <hr>
 <i>Completed.</i>
 
-<h3>What I learned</h3>
+<h3>Topics covered:</h3>
 <ul>
   <li>Data Structures</li>
   <li>Object-Oriented Programming</li>
